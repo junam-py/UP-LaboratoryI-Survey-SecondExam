@@ -2,8 +2,6 @@ package database;
 
 import java.util.List;
 
-import org.h2.table.Table;
-
 import database.DAO.PromoterDAO;
 import database.DAO.h2.PromoterDAOH2;
 import database.exception.DAOException;

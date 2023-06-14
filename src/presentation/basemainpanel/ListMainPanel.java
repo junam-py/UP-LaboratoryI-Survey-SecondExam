@@ -3,21 +3,16 @@ package presentation.basemainpanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
-import org.h2.engine.SettingsBase;
-import org.h2.table.TableBase;
 
 import presentation.PanelManager;
 import presentation.basepanel.TableBasePanel;
 import presentation.panel.ListActionsPanel;
-import services.Promoter;
 
 public abstract class ListMainPanel extends JPanel {
     protected PanelManager panelManager;
-    
+
     protected TableBasePanel tablePanel;
     protected ListActionsPanel listPanel;
 
@@ -46,5 +41,34 @@ public abstract class ListMainPanel extends JPanel {
                 editAction();
             }
         });
+
+        listPanel.getDeleteButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteAction();
+            }
+        });
+
+        listPanel.getBackButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                backAction();
+            }
+
+        });
     }
+
+    public void setActionsPanel() {
+        listPanel = new ListActionsPanel(panelManager);
+    }
+
+    public abstract void setTablePanel();
+
+    public abstract void addAction();
+
+    public abstract void editAction();
+
+    public abstract void backAction();
+
+    public abstract void deleteAction();
 }
