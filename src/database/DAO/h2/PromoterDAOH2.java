@@ -1,32 +1,17 @@
 package database.DAO.h2;
 
-/** 
- * Importing Java SQL Packages
-*/
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/** 
- * Importing Util Packages
-*/
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Importing DB Packages 
- */
 import database.DBManager;
 import database.DAO.PromoterDAO;
 
-/**
- * Importing Exceptions Packages
- */
 import database.exception.DAOException;
 import database.exception.DBManagerException;
 
-/**
- * Importing Services Packages
- */
 import services.Promoter;
 
 public class PromoterDAOH2 implements PromoterDAO {
@@ -114,6 +99,7 @@ public class PromoterDAOH2 implements PromoterDAO {
      * @return List<Promoter> all the promoters founded in DB
      * @throws DAOException in case of error getting promoter
      */
+    @Override
     public List<Promoter> listPromoters() throws DAOException {
         List<Promoter> resul = new ArrayList<>();
         String sql = "SELECT * from promoters";
@@ -135,4 +121,5 @@ public class PromoterDAOH2 implements PromoterDAO {
         }
         return resul;
     }
+    
 }

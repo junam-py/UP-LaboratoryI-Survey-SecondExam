@@ -1,7 +1,7 @@
 package database.exception;
 
 public class DAOException extends DBException {
-
+	
     public DAOException() {
 		super();
 	}
