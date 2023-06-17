@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import services.Promoter;
+import services.model.Promoter;
 
 public class PromoterTableModel extends AbstractTableModel {
     private static final int ID_COL = 0;

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import presentation.PanelManager;
-import services.Promoter;
+import services.model.Promoter;
 
 public abstract class TableBasePanel extends JPanel {
     protected final PanelManager panelManager;

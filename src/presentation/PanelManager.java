@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import presentation.mainpanel.PromoterRegistrationMainPanel;
+import presentation.mainpanel.StartMainPanel;
+
 
 public class PanelManager {
     private JFrame frame;
-    // private PromoterRegistrationPanel promoterRegistrationPanel;
-    // private PromoterListPanel promoterListPanel;
+    private PromoterRegistrationMainPanel promoterRegistrationPanel;
+    private PromoterListPanel promoterListPanel;
 
     public PanelManager() {
         initializeManager();
@@ -20,20 +23,34 @@ public class PanelManager {
     public void initializeManager() {
         frame = new JFrame();
         frame.setBounds(100, 100, 500, 500);
-        frame.setLocationRelative(null);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                if(DialogManager.ShowConfirmationMessage == JOptionPane.YES_OPTION) {
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                } else {
-                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING);
-                }
-            }
-        });
-        promoterRegistrationPanel = new PromoterRegistrationPanel(this);
+        frame.setLocationRelativeTo(null);
+        promoterRegistrationPanel = new PromoterRegistrationMainPanel(this);
         promoterListPanel =  new PromoterListPanel(this);
         new StartMainPanel(this);
-
     }
 
+    public void showFrame() {
+        frame.setVisible(true);
+    }
+
+    public void showMain() {
+        showMainPanel(new StartMainPanel(this));
+    }
+
+    public void showMainPanel(JPanel mainPanel) {
+        frame.getContentPane().removeAll();
+        frame.add(mainPanel);
+        frame.getContentPane().validate();
+        frame.getContentPane().repaint();
+    }
+
+    public void showPromoterList() {
+        promoterListPanel = new PromoterListPanel(this);
+        showMainPanel(promoterListPanel);
+    }
+
+    public void showPromoterRegistration() {
+        promoterRegistrationPanel = new PromoterRegistrationMainPanel(this);
+        showMainPanel(promoterRegistrationPanel);
+    }
 }

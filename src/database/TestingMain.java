@@ -7,7 +7,7 @@ import database.DAO.h2.PromoterDAOH2;
 import database.exception.DAOException;
 import database.exception.TableManagerException;
 import database.tablemanager.PromoterTableManager;
-import services.Promoter;
+import services.model.Promoter;
 
 public class TestingMain {
     public static void main(String[] args) {

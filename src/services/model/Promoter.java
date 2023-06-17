@@ -1,4 +1,4 @@
-package services;
+package services.model;
 
 public class Promoter {
     private int ID;

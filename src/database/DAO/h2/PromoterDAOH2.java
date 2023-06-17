@@ -4,17 +4,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import database.DBManager;
 import database.DAO.PromoterDAO;
 
 import database.exception.DAOException;
 import database.exception.DBManagerException;
-
-import services.Promoter;
+import database.tablemanager.PromoterTableManager;
+import services.model.Promoter;
 
 public class PromoterDAOH2 implements PromoterDAO {
+    private final PromoterTableManager promoterTableManager;
+
+    public PromoterDAOH2() {
+        promoterTableManager = new PromoterTableManager();
+    }
 
     /**
      * @param promoter to create
@@ -100,8 +104,8 @@ public class PromoterDAOH2 implements PromoterDAO {
      * @throws DAOException in case of error getting promoter
      */
     @Override
-    public List<Promoter> listPromoters() throws DAOException {
-        List<Promoter> resul = new ArrayList<>();
+    public ArrayList<Promoter> listPromoters() throws DAOException {
+        ArrayList<Promoter>  resul = new ArrayList<>();
         String sql = "SELECT * from promoters";
         try {
             ResultSet rs = DBManager.generateQuery(sql);

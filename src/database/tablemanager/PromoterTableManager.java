@@ -6,6 +6,8 @@ import database.exception.TableManagerException;
 
 public class PromoterTableManager {
 
+    public PromoterTableManager() { }
+
     /** 
      * @throws TableManagerException in case of error generating executing statement
      */

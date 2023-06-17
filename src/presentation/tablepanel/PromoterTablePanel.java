@@ -60,6 +60,7 @@ public class PromoterTablePanel extends JPanel implements ActionListener, Printa
         printButton = new JButton("Print Table");
         printButton.addActionListener(this);
         add(printButton);
+    }
 
 
     public void actionPerformed(ActionEvent event) {
