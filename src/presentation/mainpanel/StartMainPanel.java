@@ -12,7 +12,6 @@ import presentation.PanelManager;
 public class StartMainPanel extends JPanel {
     protected PanelManager panelManager;
     private JButton promotersButton;
-    private JButton logoutButton;
 
     public StartMainPanel(PanelManager panelManager) {
         this.panelManager = panelManager;
@@ -25,7 +24,7 @@ public class StartMainPanel extends JPanel {
         promotersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.showPromotersList();
+                panelManager.showPromoterList();
             }
         });
     }

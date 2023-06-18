@@ -15,6 +15,21 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
         promoterService = new PromoterService();
     }
 
+    public PromoterRegistrationMainPanel(PanelManager panelManager, Promoter promoterEdition) {
+        super(panelManager);
+        promoterService = new PromoterService();
+        fillFields(promoterEdition);
+    }
+
+    public void fillFields(Promoter promoter) {
+        PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
+        promoterFieldsPanel.getIdText().setText(String.valueOf(promoter.getID()));
+        promoterFieldsPanel.getNameText().setText(promoter.getName());
+        promoterFieldsPanel.getSecondNameText().setText(promoter.getSecondName());
+        promoterFieldsPanel.getEmailText().setText(promoter.getEmail());
+        promoterFieldsPanel.getAgeText().setText(String.valueOf(promoter.getAge()));
+    }
+
     @Override
     public void setFieldsPanel() {
         fieldsPanel = new PromoterFieldsPanel(panelManager);

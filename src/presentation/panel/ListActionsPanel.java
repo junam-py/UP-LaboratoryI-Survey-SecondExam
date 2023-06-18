@@ -3,7 +3,6 @@ package presentation.panel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 

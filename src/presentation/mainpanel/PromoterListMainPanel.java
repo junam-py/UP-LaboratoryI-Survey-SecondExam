@@ -32,4 +32,46 @@ public class PromoterListMainPanel extends ListMainPanel {
     public void setTablePanel() {
         tablePanel = new PromoterTablePanel(panelManager);
     }
+
+    @Override
+    public void addAction() {
+        panelManager.showPromoterRegistration();
+    }
+
+    @Override
+    public void editAction() {
+        PromoterTablePanel promoterTablePanel = (PromoterTablePanel) tablePanel;
+        int selectedRow = promoterTablePanel.getPromoterTable().getSelectedRow();
+        Promoter promoterEdit = promoterTablePanel.getPromoterTableModel().getContent().get(selectedRow);
+        panelManager.showPromoterEdition(promoterEdit);
+    }
+
+    @Override
+    public void deleteAction() {
+        PromoterTablePanel promoterTablePanel = (PromoterTablePanel) tablePanel;
+        int selectedRow = promoterTablePanel.getPromoterTable().getSelectedRow();
+        Promoter promoterDelete = promoterTablePanel.getPromoterTableModel().getContent().get(selectedRow);
+        try {
+            promoterService.deletePromoter(promoterDelete);
+            promoterTablePanel.getPromoterTableModel().getContent().remove(promoterDelete);
+        } catch (ServiceException e) {
+            // TODO buscar forma de mostrar error en el panel
+        }
+
+    }
+
+    @Override
+    public void backAction() {
+        panelManager.showMain();
+    }
+
+    public ArrayList<Promoter> getPromoters() {
+        ArrayList<Promoter> promotersList = null;
+        try {
+            promotersList = promoterService.obtainPromoters();
+        } catch (ServiceException e) {
+            // TODO buscar forma de mostrar error en el panel
+        }
+        return promotersList;
+    }
 }

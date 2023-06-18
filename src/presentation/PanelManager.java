@@ -1,20 +1,18 @@
 package presentation;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import presentation.mainpanel.PromoterRegistrationMainPanel;
+import presentation.mainpanel.PromoterListMainPanel;
 import presentation.mainpanel.StartMainPanel;
+import services.model.Promoter;
 
 
 public class PanelManager {
     private JFrame frame;
     private PromoterRegistrationMainPanel promoterRegistrationPanel;
-    private PromoterListPanel promoterListPanel;
+    private PromoterListMainPanel promoterListPanel;
 
     public PanelManager() {
         initializeManager();
@@ -25,7 +23,7 @@ public class PanelManager {
         frame.setBounds(100, 100, 500, 500);
         frame.setLocationRelativeTo(null);
         promoterRegistrationPanel = new PromoterRegistrationMainPanel(this);
-        promoterListPanel =  new PromoterListPanel(this);
+        promoterListPanel =  new PromoterListMainPanel(this);
         new StartMainPanel(this);
     }
 
@@ -45,12 +43,17 @@ public class PanelManager {
     }
 
     public void showPromoterList() {
-        promoterListPanel = new PromoterListPanel(this);
+        promoterListPanel = new PromoterListMainPanel(this);
         showMainPanel(promoterListPanel);
+    }
+
+    public void showPromoterEdition(Promoter promoter) {
+        showMainPanel(new PromoterRegistrationMainPanel(this, promoter));
     }
 
     public void showPromoterRegistration() {
         promoterRegistrationPanel = new PromoterRegistrationMainPanel(this);
         showMainPanel(promoterRegistrationPanel);
     }
+
 }

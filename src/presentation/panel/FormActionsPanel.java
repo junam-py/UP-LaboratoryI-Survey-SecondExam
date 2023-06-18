@@ -1,7 +1,5 @@
 package presentation.panel;
 
-import java.awt.Panel;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
