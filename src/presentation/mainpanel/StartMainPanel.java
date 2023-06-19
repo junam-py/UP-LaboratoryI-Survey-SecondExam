@@ -21,6 +21,7 @@ public class StartMainPanel extends JPanel {
     public void initializePanel() {
         setLayout(new FlowLayout());
         promotersButton = new JButton("Promoters");
+        add(promotersButton);
         promotersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

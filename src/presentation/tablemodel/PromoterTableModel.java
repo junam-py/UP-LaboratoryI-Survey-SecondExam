@@ -43,12 +43,16 @@ public class PromoterTableModel extends AbstractTableModel {
                 break;
             case NAME_COL:
                 result = promoter.getName();
+                break;
             case SECONDNAME_COL:
                 result = promoter.getSecondName();
+                break;
             case EMAIL_COL:
                 result = promoter.getEmail();
+                break;
             case AGE_COL:
                 result = promoter.getAge();
+                break;
             default:
                 result = new String("");
         }

@@ -106,7 +106,7 @@ public class PromoterDAOH2 implements PromoterDAO {
     @Override
     public ArrayList<Promoter> listPromoters() throws DAOException {
         ArrayList<Promoter>  resul = new ArrayList<>();
-        String sql = "SELECT * from promoters";
+        String sql = "SELECT * from PROMOTERS";
         try {
             ResultSet rs = DBManager.generateQuery(sql);
             while (rs.next()) { // if there is next row (!= null)...

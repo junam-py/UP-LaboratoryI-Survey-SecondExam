@@ -54,6 +54,7 @@ public class PromoterListMainPanel extends ListMainPanel {
         try {
             promoterService.deletePromoter(promoterDelete);
             promoterTablePanel.getPromoterTableModel().getContent().remove(promoterDelete);
+            backAction();
         } catch (ServiceException e) {
             // TODO buscar forma de mostrar error en el panel
         }

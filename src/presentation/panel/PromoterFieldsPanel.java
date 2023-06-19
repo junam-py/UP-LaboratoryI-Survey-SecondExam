@@ -23,21 +23,46 @@ public class PromoterFieldsPanel extends FieldsBasePanel {
     public void initializePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        addFieldPanel(idText, "ID:");
-        addFieldPanel(nameText, "Name:");  
-        addFieldPanel(secondNameText, "Second name:");
-        addFieldPanel(emailText, "Email:");
-        addFieldPanel(ageText, "Age:");
-    }
+        JPanel idFieldPanel = new JPanel();
+        idFieldPanel.setLayout(new BoxLayout(idFieldPanel, BoxLayout.X_AXIS));
+        JLabel idLabel = new JLabel("ID:");
+        idText = new JTextField("");
+        idFieldPanel.add(idLabel);
+        idFieldPanel.add(idText);
+        add(idFieldPanel);
 
-    public void addFieldPanel(JTextField textField, String labelText) {
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
-        JLabel label = new JLabel(labelText);
-        textField = new JTextField("");
-        fieldPanel.add(label);
-        fieldPanel.add(textField);
-        add(fieldPanel);
+        JPanel nameFieldPanel = new JPanel();
+        nameFieldPanel.setLayout(new BoxLayout(nameFieldPanel, BoxLayout.X_AXIS));
+        JLabel nameLabel = new JLabel("Name:");
+        nameText = new JTextField("");
+        nameFieldPanel.add(nameLabel);
+        nameFieldPanel.add(nameText);
+        add(nameFieldPanel);
+
+        JPanel secondNameFieldPanel = new JPanel();
+        secondNameFieldPanel.setLayout(new BoxLayout(secondNameFieldPanel, BoxLayout.X_AXIS));
+        JLabel secondNameLabel = new JLabel("Second Name:");
+        secondNameText = new JTextField("");
+        secondNameFieldPanel.add(secondNameLabel);
+        secondNameFieldPanel.add(secondNameText);
+        add(secondNameFieldPanel);
+
+        JPanel emailFieldPanel = new JPanel();
+        emailFieldPanel.setLayout(new BoxLayout(emailFieldPanel, BoxLayout.X_AXIS));
+        JLabel emaiLabel = new JLabel("Email:");
+        emailText = new JTextField("");
+        emailFieldPanel.add(emaiLabel);
+        emailFieldPanel.add(emailText);
+        add(emailFieldPanel);
+
+        JPanel ageFieldPanel = new JPanel();
+        ageFieldPanel.setLayout(new BoxLayout(ageFieldPanel, BoxLayout.X_AXIS));
+        JLabel ageLabel = new JLabel("Age:");
+        ageText = new JTextField("");
+        ageFieldPanel.add(ageLabel);
+        ageFieldPanel.add(ageText);
+        add(ageFieldPanel);
+
     }
 
     public JTextField getNameText() {

@@ -14,14 +14,13 @@ public class PanelManager {
     private PromoterRegistrationMainPanel promoterRegistrationPanel;
     private PromoterListMainPanel promoterListPanel;
 
-    public PanelManager() {
-        initializeManager();
-    }
+    public PanelManager() { }
 
     public void initializeManager() {
         frame = new JFrame();
         frame.setBounds(100, 100, 500, 500);
-        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         promoterRegistrationPanel = new PromoterRegistrationMainPanel(this);
         promoterListPanel =  new PromoterListMainPanel(this);
         new StartMainPanel(this);
@@ -43,8 +42,7 @@ public class PanelManager {
     }
 
     public void showPromoterList() {
-        promoterListPanel = new PromoterListMainPanel(this);
-        showMainPanel(promoterListPanel);
+        showMainPanel(new PromoterListMainPanel(this));
     }
 
     public void showPromoterEdition(Promoter promoter) {

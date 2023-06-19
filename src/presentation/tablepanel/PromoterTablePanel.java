@@ -34,8 +34,11 @@ public class PromoterTablePanel extends TableBasePanel {
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.X_AXIS));
         promoterTableModel = new PromoterTableModel();
+        promoterTableModel.fireTableDataChanged();
         promoterTable = new JTable(promoterTableModel);
         promoterTableModel.setContent(promoters);
+        add(tablePanel);
+        add(promoterTable);
     }
 
     public JTable getPromoterTable() {

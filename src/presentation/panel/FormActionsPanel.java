@@ -20,12 +20,12 @@ public class FormActionsPanel extends ActionsBasePanel {
         JPanel actionsPanel = new JPanel();
         actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.X_AXIS));
         acceptButton = new JButton("Accept");
-        backButton = new JButton("Back");
         cleanButton = new JButton("Clean");
+        backButton = new JButton("Back");
 
         actionsPanel.add(acceptButton);
-        actionsPanel.add(backButton);
         actionsPanel.add(cleanButton);
+        actionsPanel.add(backButton);
 
         this.add(actionsPanel);
     }

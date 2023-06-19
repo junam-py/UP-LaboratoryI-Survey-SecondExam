@@ -9,14 +9,17 @@ import services.model.Promoter;
 
 public class PromoterRegistrationMainPanel extends RegisterMainPanel {
     private final PromoterService promoterService;
+    private boolean edition;
 
     public PromoterRegistrationMainPanel(PanelManager panelManager) {
         super(panelManager);
+        edition = false;
         promoterService = new PromoterService();
     }
 
     public PromoterRegistrationMainPanel(PanelManager panelManager, Promoter promoterEdition) {
         super(panelManager);
+        edition = true;
         promoterService = new PromoterService();
         fillFields(promoterEdition);
     }
@@ -36,23 +39,33 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
     }
 
     @Override
-    public void acceptAction() { 
+    public void acceptAction() {
         PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
         String id = promoterFieldsPanel.getIdText().getText();
-        String name = promoterFieldsPanel.getIdText().getText();
-        String secondName = promoterFieldsPanel.getIdText().getText();
-        String email = promoterFieldsPanel.getIdText().getText();
-        String age = promoterFieldsPanel.getIdText().getText();
+        String name = promoterFieldsPanel.getNameText().getText();
+        String secondName = promoterFieldsPanel.getSecondNameText().getText();
+        String email = promoterFieldsPanel.getEmailText().getText();
+        String age = promoterFieldsPanel.getAgeText().getText();
         Promoter newPromoter = new Promoter(Integer.valueOf(id), name, secondName, email, Integer.valueOf(age));
-        try {
-            promoterService.createPromoter(newPromoter);
-            backAction();
-        } catch(ServiceException e) {
-            // buscar forma de mostrar error en el panel
+        if (edition == false) {
+            try {
+                promoterService.createPromoter(newPromoter);
+                backAction();
+            } catch (ServiceException e) {
+                // buscar forma de mostrar error en el panel
+            }
+
+        } else {
+            try {
+                promoterService.updatePromoter(newPromoter);
+                backAction();
+            } catch (ServiceException e) {
+                // buscar forma de mostrar error en el panel
+            }
         }
     }
 
-    @Override 
+    @Override
     public void cleanAction() {
         PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
         promoterFieldsPanel.getIdText().setText("");
