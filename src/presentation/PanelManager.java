@@ -10,6 +10,7 @@ import services.model.Promoter;
 
 
 public class PanelManager {
+    
     private JFrame frame;
     private PromoterRegistrationMainPanel promoterRegistrationPanel;
     private PromoterListMainPanel promoterListPanel;

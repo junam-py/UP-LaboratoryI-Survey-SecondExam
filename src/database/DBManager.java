@@ -10,6 +10,7 @@ import java.sql.Statement;
 import database.exception.DBManagerException;
 
 public class DBManager {
+    
     private static final String DB_DRIVER = "org.h2.Driver";
     private static final String DB_USERNAME = "sa";
     private static final String DB_PASSWORD = "";

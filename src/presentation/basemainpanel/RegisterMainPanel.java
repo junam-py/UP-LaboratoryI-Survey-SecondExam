@@ -8,11 +8,12 @@ import javax.swing.JPanel;
 
 import presentation.PanelManager;
 import presentation.basepanel.FieldsBasePanel;
+import presentation.mainpanel.PromoterListMainPanel;
 import presentation.panel.FormActionsPanel;
 
 public abstract class RegisterMainPanel extends JPanel {
-    protected PanelManager panelManager;
 
+    protected PanelManager panelManager;
     protected FieldsBasePanel fieldsPanel;
     protected FormActionsPanel formPanel;
 
@@ -28,6 +29,7 @@ public abstract class RegisterMainPanel extends JPanel {
         add(fieldsPanel);
         add(formPanel);
 
+        // Accept button action listener
         formPanel.getAcceptButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -35,6 +37,7 @@ public abstract class RegisterMainPanel extends JPanel {
             }
         });
 
+        // Clean text fields button action listener
         formPanel.getCleanButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -42,6 +45,7 @@ public abstract class RegisterMainPanel extends JPanel {
             }
         });
 
+        // Back button action listener
         formPanel.getBackButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -54,6 +58,11 @@ public abstract class RegisterMainPanel extends JPanel {
     private void setActionsPanel() {
         formPanel = new FormActionsPanel(panelManager);
     }
+
+    /**
+    * This methods depends on which table we are working in
+    * @see PromoterRegistrationMainPanel.java file
+    */
 
     public abstract void setFieldsPanel();
 

@@ -8,8 +8,9 @@ import services.exception.ServiceException;
 import services.model.Promoter;
 
 public class PromoterRegistrationMainPanel extends RegisterMainPanel {
+
     private final PromoterService promoterService;
-    private boolean edition;
+    private boolean edition; // since the process of adding and editing is exactly the same, they are included in the same panel
 
     public PromoterRegistrationMainPanel(PanelManager panelManager) {
         super(panelManager);
@@ -24,6 +25,9 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
         fillFields(promoterEdition);
     }
 
+    /** 
+     * @param promoter to fill the fields
+     */
     public void fillFields(Promoter promoter) {
         PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
         promoterFieldsPanel.getIdText().setText(String.valueOf(promoter.getID()));
@@ -47,6 +51,7 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
         String email = promoterFieldsPanel.getEmailText().getText();
         String age = promoterFieldsPanel.getAgeText().getText();
         Promoter newPromoter = new Promoter(Integer.valueOf(id), name, secondName, email, Integer.valueOf(age));
+        // Depending if we are editing or not
         if (edition == false) {
             try {
                 promoterService.createPromoter(newPromoter);
@@ -80,4 +85,5 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
         cleanAction();
         panelManager.showPromoterList();
     }
+
 }

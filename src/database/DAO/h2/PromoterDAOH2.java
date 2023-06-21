@@ -14,6 +14,7 @@ import database.tablemanager.PromoterTableManager;
 import services.model.Promoter;
 
 public class PromoterDAOH2 implements PromoterDAO {
+
     private final PromoterTableManager promoterTableManager;
 
     public PromoterDAOH2() {

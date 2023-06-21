@@ -11,8 +11,8 @@ import presentation.basepanel.TableBasePanel;
 import presentation.panel.ListActionsPanel;
 
 public abstract class ListMainPanel extends JPanel {
-    protected PanelManager panelManager;
 
+    protected PanelManager panelManager;
     protected TableBasePanel tablePanel;
     protected ListActionsPanel listPanel;
 
@@ -25,10 +25,11 @@ public abstract class ListMainPanel extends JPanel {
 
     public void initializePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(tablePanel);
-        add(listPanel);
+        add(tablePanel); // base table panel for promoters list
+        add(listPanel); // base actions table panel for promoters list
 
         listPanel.getAddButton().addActionListener(new ActionListener() {
+            // if user press add button
             @Override
             public void actionPerformed(ActionEvent event) {
                 addAction();
@@ -36,6 +37,7 @@ public abstract class ListMainPanel extends JPanel {
         });
 
         listPanel.getEditButton().addActionListener(new ActionListener() {
+            // if user press edit button
             @Override
             public void actionPerformed(ActionEvent event) {
                 editAction();
@@ -43,6 +45,7 @@ public abstract class ListMainPanel extends JPanel {
         });
 
         listPanel.getDeleteButton().addActionListener(new ActionListener() {
+            // if user press delete button
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteAction();
@@ -50,6 +53,7 @@ public abstract class ListMainPanel extends JPanel {
         });
 
         listPanel.getBackButton().addActionListener(new ActionListener() {
+            // if user press back button
             @Override
             public void actionPerformed(ActionEvent e) {
                 backAction();
@@ -58,9 +62,15 @@ public abstract class ListMainPanel extends JPanel {
         });
     }
 
+    // Same actions for all panel lists
     public void setActionsPanel() {
         listPanel = new ListActionsPanel(panelManager);
     }
+
+    /**
+    * This methods depends on which table we are working in
+    * @see PromoterListMainPanel.java file
+    */
 
     public abstract void setTablePanel();
 
@@ -71,4 +81,5 @@ public abstract class ListMainPanel extends JPanel {
     public abstract void backAction();
 
     public abstract void deleteAction();
+
 }

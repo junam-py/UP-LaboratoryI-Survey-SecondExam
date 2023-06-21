@@ -8,6 +8,7 @@ import presentation.PanelManager;
 import presentation.basepanel.ActionsBasePanel;
 
 public class FormActionsPanel extends ActionsBasePanel {
+
     private JButton acceptButton;
     private JButton backButton;
     private JButton cleanButton;
@@ -41,4 +42,5 @@ public class FormActionsPanel extends ActionsBasePanel {
     public JButton getCleanButton() {
         return cleanButton;
     }
+
 }

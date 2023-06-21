@@ -14,5 +14,9 @@ public abstract class TableBasePanel extends JPanel {
         this.panelManager = panelManager;
     }
 
+    /**
+    * This method depends on which panel we are working in
+    * @see PromoterTablePanel.java file
+    */
     public abstract void initializePanel(List<Promoter> list);
 }

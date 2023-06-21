@@ -12,5 +12,9 @@ public abstract class ActionsBasePanel extends JPanel {
         initializePanel();
     }
 
+    /**
+    * This method depends on which panel we are working in
+    * @see FormActionsPanel.java & ListActionsPanel file
+    */
     public abstract void initializePanel();
 }

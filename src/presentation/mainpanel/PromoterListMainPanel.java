@@ -17,7 +17,10 @@ public class PromoterListMainPanel extends ListMainPanel {
         promoterService = new PromoterService();
         tablePanel.initializePanel(obtainPromoters());
     }
-
+    
+    /** 
+     * @return ArrayList<Promoter> obtained
+     */
     public ArrayList<Promoter> obtainPromoters() {
         ArrayList<Promoter> promotersList = null;
         try {
@@ -54,7 +57,7 @@ public class PromoterListMainPanel extends ListMainPanel {
         try {
             promoterService.deletePromoter(promoterDelete);
             promoterTablePanel.getPromoterTableModel().getContent().remove(promoterDelete);
-            backAction();
+            panelManager.showPromoterList();
         } catch (ServiceException e) {
             // TODO buscar forma de mostrar error en el panel
         }
@@ -66,6 +69,9 @@ public class PromoterListMainPanel extends ListMainPanel {
         panelManager.showMain();
     }
 
+    /** 
+     * @return ArrayList<Promoter> of promoters
+     */
     public ArrayList<Promoter> getPromoters() {
         ArrayList<Promoter> promotersList = null;
         try {
@@ -75,4 +81,5 @@ public class PromoterListMainPanel extends ListMainPanel {
         }
         return promotersList;
     }
+
 }

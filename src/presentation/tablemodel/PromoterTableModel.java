@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import services.model.Promoter;
 
 public class PromoterTableModel extends AbstractTableModel {
+
     private static final int ID_COL = 0;
     private static final int NAME_COL = 1;
     private static final int SECONDNAME_COL = 2;
@@ -74,4 +75,5 @@ public class PromoterTableModel extends AbstractTableModel {
     public void setContent(List<Promoter> content) {
         this.content = content;
     }
+    
 }

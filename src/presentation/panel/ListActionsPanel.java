@@ -10,6 +10,7 @@ import presentation.PanelManager;
 import presentation.basepanel.ActionsBasePanel;
 
 public class ListActionsPanel extends ActionsBasePanel {
+
     private JButton addButton;
     private JButton editButton;
     private JButton deleteButton;
@@ -51,4 +52,5 @@ public class ListActionsPanel extends ActionsBasePanel {
     public JButton getBackButton() {
         return backButton;
     }
+
 }

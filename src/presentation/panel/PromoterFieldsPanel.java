@@ -9,6 +9,7 @@ import presentation.PanelManager;
 import presentation.basepanel.FieldsBasePanel;
 
 public class PromoterFieldsPanel extends FieldsBasePanel {
+
     private JTextField idText;
     private JTextField nameText;
     private JTextField secondNameText;
@@ -84,4 +85,5 @@ public class PromoterFieldsPanel extends FieldsBasePanel {
     public JTextField getAgeText() {
         return ageText;
     }
+
 }

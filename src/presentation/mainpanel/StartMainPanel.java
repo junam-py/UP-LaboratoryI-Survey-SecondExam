@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import presentation.PanelManager;
 
 public class StartMainPanel extends JPanel {
+    
     protected PanelManager panelManager;
     private JButton promotersButton;
 
@@ -17,6 +18,8 @@ public class StartMainPanel extends JPanel {
         this.panelManager = panelManager;
         initializePanel();
     }
+
+    // Here would be the different tables
 
     public void initializePanel() {
         setLayout(new FlowLayout());
@@ -29,4 +32,5 @@ public class StartMainPanel extends JPanel {
             }
         });
     }
+
 }
