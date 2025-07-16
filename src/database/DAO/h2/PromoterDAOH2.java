@@ -1,130 +1,94 @@
 package database.DAO.h2;
 
+import database.DAO.PromoterDAO;
+import services.model.Promoter;
+import database.DBManager;
+import database.exception.DBManagerException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
-
-import database.DBManager;
-import database.DAO.PromoterDAO;
-
-import database.exception.DAOException;
-import database.exception.DBManagerException;
-import database.tablemanager.PromoterTableManager;
-import services.model.Promoter;
+import java.util.List;
 
 public class PromoterDAOH2 implements PromoterDAO {
+    private static final String INSERT_SQL =
+        "INSERT INTO users(username, password, role, location) VALUES('%s','%s','PROMOTER','%s')";
+    private static final String SELECT_BY_ID =
+        "SELECT id, username, password, role, location FROM users WHERE id = %d AND role = 'PROMOTER'";
+    private static final String SELECT_ALL =
+        "SELECT id, username, password, role, location FROM users WHERE role = 'PROMOTER'";
+    private static final String UPDATE_SQL =
+        "UPDATE users SET username = '%s', password = '%s', location = '%s' WHERE id = %d AND role = 'PROMOTER'";
+    private static final String DELETE_SQL =
+        "DELETE FROM users WHERE id = %d AND role = 'PROMOTER'";
 
-    private final PromoterTableManager promoterTableManager;
-
-    public PromoterDAOH2() {
-        promoterTableManager = new PromoterTableManager();
+    @Override
+    public Promoter create(Promoter promoter) throws DBManagerException {
+        String sql = String.format(
+            INSERT_SQL,
+            promoter.getUsername().replace("'", "''"),
+            promoter.getPassword().replace("'", "''"),
+            promoter.getLocation().replace("'", "''")
+        );
+        DBManager.generateStatementEx(sql);
+        return promoter;
     }
 
-    /**
-     * @param promoter to create
-     * @throws DAOException in case of error creating promoter
-     */
     @Override
-    public void createPromoter(Promoter promoter) throws DAOException {
-        // SQL format be like: "INSERT INTO PROMOTERS (id, name, secondname, email, age)
-        // VALUES (ID, 'name', 'secondname', 'email', age)"
-        String sql = "INSERT INTO PROMOTERS (id, name, secondname, email, age) VALUES (" + promoter.getID() + ", '"
-                + promoter.getName() + "', '" + promoter.getSecondName() + "', '" + promoter.getEmail() + "', "
-                + promoter.getAge() + ")";
-        try {
-            DBManager.generateStatementExUpdate(sql);
-        } catch (DBManagerException e) {
-            throw new DAOException("Error creating promoter");
-        }
-    }
-
-    /**
-     * @param promoter to delete
-     * @throws DAOException in case of error deleting promoter
-     */
-    @Override
-    public void deletePromoter(Promoter promoter) throws DAOException {
-        // SQL format be like: "DELETE FROM PROMOTERS WHERE id = ID"
-        String sql = "DELETE FROM PROMOTERS WHERE id = " + promoter.getID();
-        try {
-            DBManager.generateStatementEx(sql);
-        } catch (DBManagerException e) {
-            throw new DAOException("Error deleting promoter");
-        }
-    }
-
-    /**
-     * @param promoter to update
-     * @throws DAOException in case of error updating promoter
-     */
-    @Override
-    public void updatePromoter(Promoter promoter) throws DAOException {
-        // SQL format be like: "UPDATE PROMOTERS SET name = 'name', secondname =
-        // 'secondname', email = 'email', age = age WHERE id = id"
-        String sql = "UPDATE PROMOTERS SET name = '" + promoter.getName() + "', secondname = '"
-                + promoter.getSecondName() + "', email = '" + promoter.getEmail() + "', age = " + promoter.getAge()
-                + " WHERE id = " + promoter.getID() + "";
-        try {
-            DBManager.generateStatementEx(sql);
-        } catch (DBManagerException e) {
-            throw new DAOException("Error updating promoter");
-        }
-    }
-
-    /**
-     * @param promoter to show
-     * @return Promoter to show, or null
-     * @throws DAOException in case of error getting promoter
-     */
-    @Override
-    public Promoter showPromoter(Promoter promoter) throws DAOException {
-        // SQL format be like: "SELECT * FROM PROMOTERS WHERE name = 'name'"
-        String sql = "SELECT * FROM PROMOTERS WHERE name = '" + promoter.getName() + "'";
+    public Promoter findById(Long id) throws DBManagerException {
+        String sql = String.format(SELECT_BY_ID, id);
         try {
             ResultSet rs = DBManager.generateQuery(sql);
-            if (rs.next()) { // if there is next row (!= null)...
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String secondName = rs.getString("secondname");
-                String email = rs.getString("email");
-                int age = rs.getInt("age");
-                Promoter newPromoter = new Promoter(id, name, secondName, email, age);
-                return newPromoter;
-            }
-        } catch (DBManagerException e) { // from generateQuery
-            throw new DAOException("Error showing promoter");
-        } catch (SQLException e) { // from rs.next()
-            throw new DAOException("Error showing promoter");
+            if (!rs.next()) return null;
+            return new Promoter(
+                rs.getLong("id"),
+                rs.getString("username"),
+                rs.getString("password"),
+                rs.getString("role"),
+                rs.getString("location")
+            );
+        } catch (SQLException e) {
+            throw new DBManagerException("Error finding promoter by ID", e);
         }
-        return null;
     }
 
-    /**
-     * @return List<Promoter> all the promoters founded in DB
-     * @throws DAOException in case of error getting promoter
-     */
     @Override
-    public ArrayList<Promoter> listPromoters() throws DAOException {
-        ArrayList<Promoter>  resul = new ArrayList<>();
-        String sql = "SELECT * from PROMOTERS";
+    public List<Promoter> findAll() throws DBManagerException {
+        String sql = SELECT_ALL;
+        List<Promoter> list = new ArrayList<>();
         try {
             ResultSet rs = DBManager.generateQuery(sql);
-            while (rs.next()) { // if there is next row (!= null)...
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String secondName = rs.getString("secondname");
-                String email = rs.getString("email");
-                int age = rs.getInt("age");
-                Promoter newPromoter = new Promoter(id, name, secondName, email, age);
-                resul.add(newPromoter);
+            while (rs.next()) {
+                list.add(new Promoter(
+                    rs.getLong("id"),
+                    rs.getString("username"),
+                    rs.getString("password"),
+                    rs.getString("role"),
+                    rs.getString("location")
+                ));
             }
-        } catch (DBManagerException e) { // from generateQuery
-            throw new DAOException("Error getting promoters list");
-        } catch (SQLException e) { // from rs.next()
-            throw new DAOException("Error getting promoters list");
+            return list;
+        } catch (SQLException e) {
+            throw new DBManagerException("Error listing promoters", e);
         }
-        return resul;
     }
-    
+
+    @Override
+    public Promoter update(Promoter promoter) throws DBManagerException {
+        String sql = String.format(
+            UPDATE_SQL,
+            promoter.getUsername().replace("'", "''"),
+            promoter.getPassword().replace("'", "''"),
+            promoter.getLocation().replace("'", "''"),
+            promoter.getId()
+        );
+        DBManager.generateStatementExUpdate(sql);
+        return promoter;
+    }
+
+    @Override
+    public void delete(Long id) throws DBManagerException {
+        String sql = String.format(DELETE_SQL, id);
+        DBManager.generateStatementEx(sql);
+    }
 }

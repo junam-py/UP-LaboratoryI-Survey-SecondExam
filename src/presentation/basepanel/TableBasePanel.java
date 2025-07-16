@@ -1,22 +1,20 @@
 package presentation.basepanel;
 
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import presentation.PanelManager;
-import services.model.Promoter;
 
-public abstract class TableBasePanel extends JPanel {
+/**
+ * Base genérico para todos los paneles de tabla.
+ * Cada subclase indica su propio tipo T.
+ */
+public abstract class TableBasePanel<T> extends JPanel {
     protected final PanelManager panelManager;
 
     public TableBasePanel(PanelManager panelManager) {
         this.panelManager = panelManager;
     }
 
-    /**
-    * This method depends on which panel we are working in
-    * @see PromoterTablePanel.java file
-    */
-    public abstract void initializePanel(List<Promoter> list);
+    /** Inicializa la tabla con la lista de entidades T */
+    public abstract void initializePanel(List<T> list);
 }

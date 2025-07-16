@@ -1,21 +1,16 @@
 package database.DAO;
 
-import java.util.ArrayList;
-
-import database.exception.DAOException;
-
 import services.model.Promoter;
+import database.exception.DBManagerException;
+import java.util.List;
 
 /**
-* @see PromoterDAOH2.java file
-*/
-
+ * CRUD operations for Promoter.
+ */
 public interface PromoterDAO {
-
-    void createPromoter(Promoter promoter) throws DAOException;
-    void deletePromoter(Promoter promoter) throws DAOException;
-    void updatePromoter(Promoter promoter) throws DAOException;
-    Promoter showPromoter(Promoter promoter) throws DAOException;
-    ArrayList<Promoter> listPromoters() throws DAOException;
-    
+    Promoter create(Promoter promoter) throws DBManagerException;
+    Promoter findById(Long id) throws DBManagerException;
+    List<Promoter> findAll() throws DBManagerException;
+    Promoter update(Promoter promoter) throws DBManagerException;
+    void delete(Long id) throws DBManagerException;
 }

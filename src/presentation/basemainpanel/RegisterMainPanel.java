@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import presentation.PanelManager;
 import presentation.basepanel.FieldsBasePanel;
-import presentation.mainpanel.PromoterListMainPanel;
 import presentation.panel.FormActionsPanel;
 
 public abstract class RegisterMainPanel extends JPanel {

@@ -1,85 +1,63 @@
+// src/presentation/basemainpanel/ListMainPanel.java
 package presentation.basemainpanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import presentation.PanelManager;
 import presentation.basepanel.TableBasePanel;
-import presentation.panel.ListActionsPanel;
 
-public abstract class ListMainPanel extends JPanel {
+import java.awt.*;
 
-    protected PanelManager panelManager;
-    protected TableBasePanel tablePanel;
-    protected ListActionsPanel listPanel;
+
+/**
+ * Base abstract panel for listing entities of type T, with Add/Edit/Delete.
+ */
+public abstract class ListMainPanel<T> extends JPanel {
+    protected final PanelManager panelManager;
+    protected TableBasePanel<T> tablePanel;
+
+    private final JButton addBtn    = new JButton("Add");
+    private final JButton editBtn   = new JButton("Edit");
+    private final JButton deleteBtn = new JButton("Delete");
+    private final JButton backBtn   = new JButton("Back");
 
     public ListMainPanel(PanelManager panelManager) {
         this.panelManager = panelManager;
+        setLayout(new BorderLayout());
+
+        // 1. Botonera
+        JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        north.add(addBtn);
+        north.add(editBtn);
+        north.add(deleteBtn);
+        north.add(backBtn);
+        add(north, BorderLayout.NORTH);
+
+        // 2. El tablePanel lo define cada subclase en setTablePanel()
         setTablePanel();
-        setActionsPanel();
-        initializePanel();
+        add(tablePanel, BorderLayout.CENTER);
+
+        // 3. Enlazar acciones
+        addBtn   .addActionListener(e -> addAction());
+        editBtn  .addActionListener(e -> editAction());
+        deleteBtn.addActionListener(e -> deleteAction());
+        backBtn  .addActionListener(e -> backAction());
+
+        // 4. Cargar datos iniciales
+        loadData();
     }
 
-    public void initializePanel() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(tablePanel); // base table panel for promoters list
-        add(listPanel); // base actions table panel for promoters list
+    /** Cada subclase debe instanciar su TableBasePanel concreto */
+    protected abstract void setTablePanel();
 
-        listPanel.getAddButton().addActionListener(new ActionListener() {
-            // if user press add button
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                addAction();
-            }
-        });
-
-        listPanel.getEditButton().addActionListener(new ActionListener() {
-            // if user press edit button
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                editAction();
-            }
-        });
-
-        listPanel.getDeleteButton().addActionListener(new ActionListener() {
-            // if user press delete button
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteAction();
-            }
-        });
-
-        listPanel.getBackButton().addActionListener(new ActionListener() {
-            // if user press back button
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                backAction();
-            }
-
-        });
-    }
-
-    // Same actions for all panel lists
-    public void setActionsPanel() {
-        listPanel = new ListActionsPanel(panelManager);
-    }
-
-    /**
-    * This methods depends on which table we are working in
-    * @see PromoterListMainPanel.java file
-    */
-
-    public abstract void setTablePanel();
-
+    /** Rellena la tabla con los datos */
+    public abstract void loadData();
+    /** Abre el formulario de alta */
     public abstract void addAction();
-
+    /** Abre el formulario de edición */
     public abstract void editAction();
-
-    public abstract void backAction();
-
+    /** Elimina el elemento seleccionado */
     public abstract void deleteAction();
-
+    /** Vuelve al menú principal */
+    public abstract void backAction();
 }

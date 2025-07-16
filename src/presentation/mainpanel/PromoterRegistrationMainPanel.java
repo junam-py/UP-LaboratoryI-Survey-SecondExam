@@ -1,5 +1,6 @@
 package presentation.mainpanel;
 
+import java.awt.BorderLayout;
 import presentation.PanelManager;
 import presentation.basemainpanel.RegisterMainPanel;
 import presentation.panel.PromoterFieldsPanel;
@@ -7,77 +8,78 @@ import services.PromoterService;
 import services.exception.ServiceException;
 import services.model.Promoter;
 
+/**
+ * Formulario de alta/edición de promotores.
+ */
 public class PromoterRegistrationMainPanel extends RegisterMainPanel {
-
     private final PromoterService promoterService;
-    private boolean edition; // since the process of adding and editing is exactly the same, they are included in the same panel
+    private final boolean edition;
 
+    /** Constructor para crear un promotor nuevo */
     public PromoterRegistrationMainPanel(PanelManager panelManager) {
         super(panelManager);
-        edition = false;
-        promoterService = new PromoterService();
+        this.promoterService = new PromoterService();
+        this.edition         = false;
+        setFieldsPanel();
     }
 
-    public PromoterRegistrationMainPanel(PanelManager panelManager, Promoter promoterEdition) {
+    /** Constructor para editar un promotor existente */
+    public PromoterRegistrationMainPanel(PanelManager panelManager, Promoter promoterToEdit) {
         super(panelManager);
-        edition = true;
-        promoterService = new PromoterService();
-        fillFields(promoterEdition);
+        this.promoterService = new PromoterService();
+        this.edition         = true;
+        setFieldsPanel();
+        fillFields(promoterToEdit);
     }
 
-    /** 
-     * @param promoter to fill the fields
-     */
-    public void fillFields(Promoter promoter) {
-        PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
-        promoterFieldsPanel.getIdText().setText(String.valueOf(promoter.getID()));
-        promoterFieldsPanel.getNameText().setText(promoter.getName());
-        promoterFieldsPanel.getSecondNameText().setText(promoter.getSecondName());
-        promoterFieldsPanel.getEmailText().setText(promoter.getEmail());
-        promoterFieldsPanel.getAgeText().setText(String.valueOf(promoter.getAge()));
+    /** Rellena los campos con los datos del promotor */
+    private void fillFields(Promoter promoter) {
+        PromoterFieldsPanel p = (PromoterFieldsPanel) fieldsPanel;
+        p.getIdText().setText(promoter.getId() != null ? promoter.getId().toString() : "");
+        p.getUsernameText().setText(promoter.getUsername());
+        p.getPasswordText().setText(promoter.getPassword());
+        p.getRoleText().setText(promoter.getRole());
+        p.getLocationText().setText(promoter.getLocation());
     }
 
     @Override
     public void setFieldsPanel() {
         fieldsPanel = new PromoterFieldsPanel(panelManager);
+        add(fieldsPanel, BorderLayout.CENTER);
     }
 
     @Override
     public void acceptAction() {
-        PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
-        String id = promoterFieldsPanel.getIdText().getText();
-        String name = promoterFieldsPanel.getNameText().getText();
-        String secondName = promoterFieldsPanel.getSecondNameText().getText();
-        String email = promoterFieldsPanel.getEmailText().getText();
-        String age = promoterFieldsPanel.getAgeText().getText();
-        Promoter newPromoter = new Promoter(Integer.valueOf(id), name, secondName, email, Integer.valueOf(age));
-        // Depending if we are editing or not
-        if (edition == false) {
-            try {
-                promoterService.createPromoter(newPromoter);
-                backAction();
-            } catch (ServiceException e) {
-                // buscar forma de mostrar error en el panel
-            }
+        PromoterFieldsPanel p = (PromoterFieldsPanel) fieldsPanel;
+        Long   id       = p.getIdText().getText().isEmpty() 
+                            ? null 
+                            : Long.valueOf(p.getIdText().getText());
+        String username = p.getUsernameText().getText().trim();
+        String password = p.getPasswordText().getText().trim();
+        String role     = p.getRoleText().getText().trim();
+        String location = p.getLocationText().getText().trim();
 
-        } else {
-            try {
-                promoterService.updatePromoter(newPromoter);
-                backAction();
-            } catch (ServiceException e) {
-                // buscar forma de mostrar error en el panel
+        Promoter promoter = new Promoter(id, username, password, role, location);
+        try {
+            if (!edition) {
+                promoterService.createPromoter(promoter);
+            } else {
+                promoterService.updatePromoter(promoter);
             }
+            backAction();
+        } catch (ServiceException e) {
+            // TODO: mostrar mensaje de error (ej. JOptionPane)
         }
     }
 
     @Override
     public void cleanAction() {
-        PromoterFieldsPanel promoterFieldsPanel = (PromoterFieldsPanel) fieldsPanel;
-        promoterFieldsPanel.getIdText().setText("");
-        promoterFieldsPanel.getNameText().setText("");
-        promoterFieldsPanel.getSecondNameText().setText("");
-        promoterFieldsPanel.getEmailText().setText("");
-        promoterFieldsPanel.getAgeText().setText("");
+        PromoterFieldsPanel p = (PromoterFieldsPanel) fieldsPanel;
+        p.getIdText().setText("");
+        p.getUsernameText().setText("");
+        p.getPasswordText().setText("");
+        p.getRoleText().setText("");
+        p.getLocationText().setText("");
     }
 
     @Override
@@ -85,5 +87,4 @@ public class PromoterRegistrationMainPanel extends RegisterMainPanel {
         cleanAction();
         panelManager.showPromoterList();
     }
-
 }

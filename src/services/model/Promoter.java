@@ -1,96 +1,24 @@
 package services.model;
 
-public class Promoter {
-    private int ID;
-    private String name;
-    private String secondName;
-    private String email;
-    private int age;
+public class Promoter extends User {
+    private String location;  // e.g. store or branch
 
-    
-    public Promoter(int ID, String name, String secondName, String email, int age) {
-        this.ID = ID;
-        this.name = name;
-        this.secondName = secondName;
-        this.email = email;
-        this.age = age;
+    public Promoter() { }
+
+    public Promoter(Long id, String username, String password, String role, String location) {
+        super(id, username, password, role);
+        this.location = location;
     }
 
-    
-    /** 
-     * @param ID setter
-     */
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    /** 
-     * @param name setter
-     */
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return "Promoter{" +
+               "id=" + getId() +
+               ", username='" + getUsername() + '\'' +
+               ", location='" + location + '\'' +
+               '}';
     }
-
-    
-    /** 
-     * @param secondName setter
-     */
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    
-    /** 
-     * @param email setter
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    
-    /** 
-     * @param age setter
-     */
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    
-    /** 
-     * @return int getter
-     */
-    public int getID() {
-        return ID;
-    }
-
-    
-    /** 
-     * @return String getter
-     */
-    public String getName() {
-        return name;
-    }
-
-    
-    /** 
-     * @return String getter
-     */
-    public String getSecondName() {
-        return secondName;
-    }
-
-    /** 
-     * @return String getter
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /** 
-     * @return int getter
-     */
-    public int getAge() {
-        return age;
-    }
-
 }

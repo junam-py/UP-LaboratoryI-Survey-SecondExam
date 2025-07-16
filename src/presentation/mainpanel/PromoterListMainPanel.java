@@ -1,6 +1,6 @@
 package presentation.mainpanel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import presentation.PanelManager;
 import presentation.basemainpanel.ListMainPanel;
@@ -9,31 +9,31 @@ import services.PromoterService;
 import services.exception.ServiceException;
 import services.model.Promoter;
 
-public class PromoterListMainPanel extends ListMainPanel {
+/**
+ * List view for Promoters.
+ */
+public class PromoterListMainPanel extends ListMainPanel<Promoter> {
     private final PromoterService promoterService;
 
     public PromoterListMainPanel(PanelManager panelManager) {
         super(panelManager);
-        promoterService = new PromoterService();
-        tablePanel.initializePanel(obtainPromoters());
-    }
-    
-    /** 
-     * @return ArrayList<Promoter> obtained
-     */
-    public ArrayList<Promoter> obtainPromoters() {
-        ArrayList<Promoter> promotersList = null;
-        try {
-            promotersList = promoterService.obtainPromoters();
-        } catch(ServiceException e) {
-            // TODO buscar forma de mostrar error en el panel
-        }
-        return promotersList;
+        this.promoterService = new PromoterService();
     }
 
     @Override
-    public void setTablePanel() {
+    protected void setTablePanel() {
         tablePanel = new PromoterTablePanel(panelManager);
+    }
+
+    @Override
+    public void loadData() {
+        List<Promoter> items;
+        try {
+            items = promoterService.findAll();
+        } catch (ServiceException e) {
+            items = List.of();
+        }
+        tablePanel.initializePanel(items);
     }
 
     @Override
@@ -43,43 +43,29 @@ public class PromoterListMainPanel extends ListMainPanel {
 
     @Override
     public void editAction() {
-        PromoterTablePanel promoterTablePanel = (PromoterTablePanel) tablePanel;
-        int selectedRow = promoterTablePanel.getPromoterTable().getSelectedRow();
-        Promoter promoterEdit = promoterTablePanel.getPromoterTableModel().getContent().get(selectedRow);
-        panelManager.showPromoterEdition(promoterEdit);
+        PromoterTablePanel pp = (PromoterTablePanel) tablePanel;
+        int row = pp.getSelectedRow();
+        if (row >= 0) {
+            Promoter p = pp.getPromoterTableModel().getContent().get(row);
+            panelManager.showPromoterEdition(p);
+        }
     }
 
     @Override
     public void deleteAction() {
-        PromoterTablePanel promoterTablePanel = (PromoterTablePanel) tablePanel;
-        int selectedRow = promoterTablePanel.getPromoterTable().getSelectedRow();
-        Promoter promoterDelete = promoterTablePanel.getPromoterTableModel().getContent().get(selectedRow);
-        try {
-            promoterService.deletePromoter(promoterDelete);
-            promoterTablePanel.getPromoterTableModel().getContent().remove(promoterDelete);
-            panelManager.showPromoterList();
-        } catch (ServiceException e) {
-            // TODO buscar forma de mostrar error en el panel
+        PromoterTablePanel pp = (PromoterTablePanel) tablePanel;
+        int row = pp.getSelectedRow();
+        if (row >= 0) {
+            Promoter p = pp.getPromoterTableModel().getContent().get(row);
+            try {
+                promoterService.deletePromoter(p.getId());
+                loadData();
+            } catch (ServiceException ignore) { }
         }
-
     }
 
     @Override
     public void backAction() {
         panelManager.showMain();
     }
-
-    /** 
-     * @return ArrayList<Promoter> of promoters
-     */
-    public ArrayList<Promoter> getPromoters() {
-        ArrayList<Promoter> promotersList = null;
-        try {
-            promotersList = promoterService.obtainPromoters();
-        } catch (ServiceException e) {
-            // TODO buscar forma de mostrar error en el panel
-        }
-        return promotersList;
-    }
-
 }
